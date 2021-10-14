@@ -17,9 +17,9 @@ abstract class CommissionCalculator
         }
 
         $precission = config('app.currency_decimal_places')[$currencyCode];
-        $commission = $this->_calculate($userId, $amount, $currencyCode);
+        $commission = $this->_calculate($date, $userId, $amount, $currencyCode);
         return round($commission, $precission);
     }
 
-    abstract protected function _calculate($userId, $amount, $currencyCode) : float;
+    abstract protected function _calculate($date, $userId, $amount, $currencyCode) : float;
 }
