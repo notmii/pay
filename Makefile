@@ -8,4 +8,7 @@ down:
 	docker-compose down
 
 migrate:
-	docker exec -it paycera-webapp php artisan migrate
+	docker exec -it paysera-webapp php artisan migrate
+
+phpunit:
+	docker exec -it paysera-webapp php vendor/bin/phpunit
