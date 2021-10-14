@@ -27,7 +27,7 @@ class DepositTest extends TestCase
         $date = '2021-01-01';
 
         $result = $this->calculator->calculate($userId, $date, $amount, $currency);
-        $expected = $amount * DepositCalculator::COMMISSION_PERCENT;
+        $expected = $amount * $this->calculator::COMMISSION_PERCENT;
 
         $this->assertEquals($expected, $result);
     }
