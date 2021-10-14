@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\CommissionCalculator;
+use \DateTime;
 
 abstract class CommissionCalculator
 {
@@ -10,16 +11,25 @@ abstract class CommissionCalculator
             throw new \Exception(sprintf('Unknown currency code %s.', $currencyCode));
         }
 
-        $parsedDate = strtotime($date);
+        $timestamp = strtotime($date);
 
-        if (!$parsedDate) {
+        if (!$timestamp) {
             throw new \Exception(sprintf('Invalid date %s.', $date));
         }
 
+        $parsedDate = (new DateTime())
+            ->setTimestamp($timestamp);
+
         $precission = config('app.currency_decimal_places')[$currencyCode];
-        $commission = $this->_calculate($date, $userId, $amount, $currencyCode);
+        $commission = $this->_calculate(
+            $parsedDate,
+            $userId,
+            $amount,
+            $currencyCode
+        );
+
         return round($commission, $precission);
     }
 
-    abstract protected function _calculate($date, $userId, $amount, $currencyCode) : float;
+    abstract protected function _calculate(DateTime $date, $userId, $amount, $currencyCode) : float;
 }
