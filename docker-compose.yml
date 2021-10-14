@@ -10,7 +10,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: paycera-app
-    container_name: paysera-webapp
+    container_name: test-webapp
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -22,7 +22,7 @@ services:
   nginx:
     image: nginx:alpine
     restart: unless-stopped
-    container_name: paysera-http
+    container_name: test-http
     ports:
       - 9090:80
     volumes:
@@ -35,7 +35,7 @@ services:
   db:
     image: mysql:8
     restart: unless-stopped
-    container_name: paysera-db
+    container_name: test-db
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
