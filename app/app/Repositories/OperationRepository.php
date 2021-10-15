@@ -7,9 +7,20 @@ class OperationRepository implements OperationRepositoryInterface
 {
     private $operations = [];
 
-    public function getUserOperations($userId, $weekNumber): array
+    public function getUserOperations($userId, $weekNumber, $transactionType): array
     {
-        return [];
+        $transactionStorage = $transactionType === 'deposit' ?
+            'deposits' : 'withdrawals';
+
+        if (!isset($this->operations[$userId])) {
+            return [];
+        }
+
+        if (!isset($this->operations[$userId][$transactionStorage][$weekNumber])) {
+            return [];
+        }
+
+        return $this->operations[$userId][$transactionStorage][$weekNumber];
     }
 
     public function storeUserOperation(Operation $operation): bool

@@ -87,6 +87,8 @@ class ComputeCommission extends Command
                 echo sprintf("%s\n", $commission);
             }
             echo "\n";
+
+            // var_dump($this->operationRepository->getAllOperations());
             return 0;
         } catch (\Exception $ex) {
             echo sprintf('Unknown error occured (%s)', $ex->getMessage());

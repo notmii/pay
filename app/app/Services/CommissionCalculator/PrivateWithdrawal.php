@@ -52,13 +52,17 @@ class PrivateWithdrawal extends CommissionCalculator
     {
         $operations = $this->operationRepository->getUserOperations(
             $userId,
-            $date->format('YW')
+            $date->format('YW'),
+            'withdrawal'
         );
 
+        // if withdrawal count more the FREE COUNT
+        // charge full price commision on withdrawal amount.
         if (count($operations) >= static::FREE_OF_CHARGE_COUNT) {
             return $amount * static::COMMISSION_PERCENT;
         }
 
+        // To avoid confusion we will compute in EUR.
         if ($currencyCode !== static::FREE_OF_CHARGE_CURRENCY) {
             $amount = $this->exchangeRateProvider->convert(
                 $amount,
@@ -70,8 +74,19 @@ class PrivateWithdrawal extends CommissionCalculator
         // Compute commission for operations that are less than or equal to 3
         // for a given period of time.
         $totalWithdrawal = array_reduce($operations, function($carry, $operation) {
-            return $carry += $operationA->getEurAmount();
+            return $carry += $operation->getEurAmount();
         });
+
+        // if the past withdrawals already exceeded FREE AMOUNT
+        // charge full price commission on withdrwal amount.
+        if ($totalWithdrawal > static::FREE_OF_CHARGE_AMOUNT) {
+            $commission = $this->exchangeRateProvider->convert(
+                $amount * static::COMMISSION_PERCENT,
+                static::FREE_OF_CHARGE_CURRENCY,
+                $currencyCode
+            );
+            return $commission;
+        }
 
         $deltaWithdrawal = ($totalWithdrawal + $amount);
 
