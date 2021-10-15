@@ -8,4 +8,5 @@ interface OperationRepositoryInterface
 {
     public function getUserOperations($userId, $weekNumber): array;
     public function storeUserOperation(Operation $operation): bool;
+    public function getAllOperations(): array;
 }

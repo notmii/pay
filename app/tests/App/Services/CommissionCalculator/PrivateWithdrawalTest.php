@@ -5,7 +5,7 @@ namespace Tests\App\Services\CommissionCalculator;
 use Tests\TestCase;
 use App\Services\CommissionCalculator\PrivateWithdrawal;
 use App\Providers\ExchangeRate\ExchangeRateProviderInterface;
-use App\Providers\Storages\OperationRepositoryInterface;
+use App\Repositories\OperationRepositoryInterface;
 use App\Library\Core\Entities\Operation;
 
 class PrivateWithdrawalTest extends TestCase

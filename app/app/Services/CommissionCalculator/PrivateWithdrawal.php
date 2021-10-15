@@ -4,7 +4,7 @@ namespace App\Services\CommissionCalculator;
 
 use \DateTime;
 use App\Providers\ExchangeRate\ExchangeRateProviderInterface;
-use App\Providers\Storages\OperationRepositoryInterface;
+use App\Repositories\OperationRepositoryInterface;
 
 class PrivateWithdrawal extends CommissionCalculator
 {
@@ -14,14 +14,38 @@ class PrivateWithdrawal extends CommissionCalculator
     const COMMISSION_PERCENT = 0.003; // 0.3%
 
     private $exchangeRateProvider;
-    private $operation;
+    private $operationRepository;
 
     public function __construct(
         ExchangeRateProviderInterface $exchangeRateProvider,
-        OperationRepositoryInterface $operation
+        OperationRepositoryInterface $operationRepository
     ) {
         $this->exchangeRateProvider = $exchangeRateProvider;
-        $this->operationRepository = $operation;
+        $this->operationRepository = $operationRepository;
+    }
+
+    /** 
+     * Set the value of Exchange Rate Provider 
+     * @param mixed $exchangeRateProvider
+     * @return self
+     */
+    public function setExchangeRateProvider(
+        ExchangeRateProviderInterface $exchangeRateProvider
+    ) {
+        $this->exchangeRateProvider = $exchangeRateProvider;
+        return $this;
+    }
+ 
+    /** 
+     * Set the value of Operation Repository
+     * @param mixed $operation
+     * @return self
+     */
+    public function setOperationRepository(
+        OperationRepositoryInterface $operationRepository
+    ) {
+        $this->operationRepository = $operationRepository;
+        return $this;
     }
 
     protected function _calculate(DateTime $date, $userId, $amount, $currencyCode) : float
@@ -66,4 +90,5 @@ class PrivateWithdrawal extends CommissionCalculator
 
         return $commission;
     }
+ 
 }

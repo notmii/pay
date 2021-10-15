@@ -29,7 +29,7 @@ class OperationRepository implements OperationRepositoryInterface
         $transactionStorage = $operation->getTransactionType() === 'deposit' ?
             'deposits' : 'withdrawals';
 
-        $storage = $this->operations[(string)$operation->getUserId()][$transactionStorage];
+        $storage = &$this->operations[(string)$operation->getUserId()][$transactionStorage];
         if (!array_key_exists($weekNumber, $storage)) {
             $storage[$weekNumber] = [];
         }
@@ -38,8 +38,8 @@ class OperationRepository implements OperationRepositoryInterface
 
         return true;
     }
-    
-    public function getAllOperations(): arary
+
+    public function getAllOperations(): array
     {
         return $this->operations;
     }
