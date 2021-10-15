@@ -5,12 +5,11 @@ namespace Tests\App\Services\CommissionCalculator;
 use Tests\TestCase;
 use App\Services\CommissionCalculator\PrivateWithdrawal;
 use App\Providers\ExchangeRate\ExchangeRateProviderInterface;
-use App\Operation;
+use App\Providers\Storages\OperationRepositoryInterface;
+use App\Library\Core\Entities\Operation;
 
 class PrivateWithdrawalTest extends TestCase
 {
-    private $calculator;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -23,7 +22,7 @@ class PrivateWithdrawalTest extends TestCase
     public function test_calculate_001(): void
     {
         $exchangeRateProvider = $this->mockExchangeRateProvider();
-        $operation = $this->mockOperation();
+        $operation = $this->mockOperationRepository();
 
         $calculator = new PrivateWithdrawal(
             $exchangeRateProvider,
@@ -46,12 +45,11 @@ class PrivateWithdrawalTest extends TestCase
 
     /**
      * @testdox should return 0.3 due to excess of 1000 eur.
-     * @return [type] [description]
      */
     public function test_calculate_002(): void
     {
         $exchangeRateProvider = $this->mockExchangeRateProvider();
-        $operation = $this->mockOperation();
+        $operation = $this->mockOperationRepository();
 
         $calculator = new PrivateWithdrawal(
             $exchangeRateProvider,
@@ -79,12 +77,11 @@ class PrivateWithdrawalTest extends TestCase
 
     /**
      * @testdox should return 3 due to 4th withdrawal operation.
-     * @return [type] [description]
      */
     public function test_calculate_003(): void
     {
         $exchangeRateProvider = $this->mockExchangeRateProvider();
-        $operation = $this->mockOperation();
+        $operation = $this->mockOperationRepository();
 
         $calculator = new PrivateWithdrawal(
             $exchangeRateProvider,
@@ -119,11 +116,11 @@ class PrivateWithdrawalTest extends TestCase
         return $mock;
     }
 
-    private function mockOperation()
+    private function mockOperationRepository()
     {
-        $mock = $this->getMockBuilder(Operation::class)
+        $mock = $this->getMockBuilder(OperationRepositoryInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getUserOperations'])
+            ->onlyMethods(['getUserOperations', 'storeUserOperation'])
             ->getMock();
         return $mock;
     }

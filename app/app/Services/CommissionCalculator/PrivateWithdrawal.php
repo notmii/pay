@@ -4,7 +4,7 @@ namespace App\Services\CommissionCalculator;
 
 use \DateTime;
 use App\Providers\ExchangeRate\ExchangeRateProviderInterface;
-use App\Operation;
+use App\Providers\Storages\OperationRepositoryInterface;
 
 class PrivateWithdrawal extends CommissionCalculator
 {
@@ -18,15 +18,15 @@ class PrivateWithdrawal extends CommissionCalculator
 
     public function __construct(
         ExchangeRateProviderInterface $exchangeRateProvider,
-        Operation $operation
+        OperationRepositoryInterface $operation
     ) {
         $this->exchangeRateProvider = $exchangeRateProvider;
-        $this->operation = $operation;
+        $this->operationRepository = $operation;
     }
 
     protected function _calculate(DateTime $date, $userId, $amount, $currencyCode) : float
     {
-        $operations = $this->operation->getUserOperations(
+        $operations = $this->operationRepository->getUserOperations(
             $userId,
             $date->format('YW')
         );
