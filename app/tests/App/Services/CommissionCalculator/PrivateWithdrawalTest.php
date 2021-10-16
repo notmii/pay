@@ -120,7 +120,7 @@ class PrivateWithdrawalTest extends TestCase
     {
         $mock = $this->getMockBuilder(OperationRepositoryInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getUserOperations', 'storeUserOperation'])
+            ->onlyMethods(['getUserOperations', 'storeUserOperation', 'getAllOperations'])
             ->getMock();
         return $mock;
     }

@@ -11,6 +11,7 @@ use App\Services\CommissionCalculator\Deposit;
 use App\Services\CommissionCalculator\PrivateWithdrawal;
 use App\Services\CommissionCalculator\CommissionCalculatorFactory;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ExchangeRateProviderInterface::class, function($app) {
-            return new ExchangeRateApi();
+            return new ExchangeRateApi(
+                Log::channel('Exchange Rate')
+            );
         });
 
         $this->app->singleton(OperationRepositoryInterface::class, function($app) {

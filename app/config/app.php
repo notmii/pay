@@ -290,6 +290,8 @@ return [
         'ZWL' => 2,
     ],
 
+    'exchange_rate_api_key' => env('EXCHANGE_RATE_API_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
