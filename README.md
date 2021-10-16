@@ -55,3 +55,9 @@ Only the following files & directory is created specific for this exam.
  - **PrivateWithdrawal** - responsible for computing commission for withdrawal of a private user.
  - **Deposit** - responsible for computing commission for deposits.
  - **ExchangeRateApi** - wrapper for communicating with http://api.exchangeratesapi.io/
+
+![Alt Text](https://github.com/notmii/pay/blob/master/docs/ClassDiagram.png)
+
+
+### Sample
+![Alt Text](https://github.com/notmii/pay/blob/master/docs/sample.gif)
