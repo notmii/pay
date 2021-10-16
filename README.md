@@ -12,16 +12,17 @@
 The platform used on this module is Ubuntu.
 If you are using a different platform please check the Docker website for steps to install in your platform.
 
-The *Makefile* created on this repository is just made to wrap the docker commands. You may still execute the commands without the make please refer to the *Makefile* to get the docker commands that has been wrapped.
+The *Makefile* created on this repository is just made to wrap the docker commands. You may still execute the commands without using **make** please refer to the *Makefile* to get the docker commands that has been wrapped.
 
 ### Setup
-After installing all the requirements do the following
+After installing the requirements please do the following
  - Copy **<project_root>/app/.env.example** to **<project_root>/app/.env**
  - Open & edit **<project_root>/app/.env** input your Exchange Rate API on the corresponding config variable.
  - Execute the following commands
  -- make build
  -- make up
  -- make phpunit
+ -- make compute
 
 **NOTE**:
 Update the content of *<project_root>/app/input.csv* to test your own data
@@ -55,3 +56,9 @@ Only the following files & directory is created specific for this exam.
  - **PrivateWithdrawal** - responsible for computing commission for withdrawal of a private user.
  - **Deposit** - responsible for computing commission for deposits.
  - **ExchangeRateApi** - wrapper for communicating with http://api.exchangeratesapi.io/
+
+![Alt Text](https://github.com/notmii/pay/blob/master/docs/ClassDiagram.png)
+
+
+### Sample
+![Alt Text](https://github.com/notmii/pay/blob/master/docs/sample.gif)
