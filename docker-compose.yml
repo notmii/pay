@@ -9,63 +9,9 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: paycera-app
+    image: test-app
     container_name: test-webapp
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./app:/var/www
-    networks:
-      - laravel_net
-    
-  #Nginx Service
-  nginx:
-    image: nginx:alpine
-    restart: unless-stopped
-    container_name: test-http
-    ports:
-      - 9090:80
-    volumes:
-      - ./app:/var/www
-      - ./nginx/conf.d:/etc/nginx/conf.d/
-    networks:
-      - laravel_net
-
-  #MySQL Service
-  db:
-    image: mysql:8
-    restart: unless-stopped
-    container_name: test-db
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-    ports:
-      - 3306:3306
-    volumes:
-      - ./init-db:/docker-entrypoint-initdb.d
-      - ./db_data:/var/lib/mysql
-    #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    #         --default-authentication-plugin=mysql_native_password
-    networks:
-      - laravel_net
-
-  # phpmyadmin
-  # phpmyadmin:
-  #   depends_on:
-  #     - db
-  #   image: phpmyadmin/phpmyadmin
-  #   restart: always
-  #   container_name: jr-l-pma
-  #   ports:
-  #     - 9091:80
-  #   environment:
-  #     PMA_HOST: db
-  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-  #   networks:
-  #     - laravel_net
-
-networks:
-  laravel_net:
-    driver: bridge
