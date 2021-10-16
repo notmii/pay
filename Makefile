@@ -12,3 +12,6 @@ migrate:
 
 phpunit:
 	docker exec -it test-webapp php vendor/bin/phpunit --testdox
+
+compute:
+	docker exec -it test-webapp php artisan compute:commissions --csv=./input.csv
